@@ -1,0 +1,75 @@
+package Teach_test;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Arraylist_test {
+    public static void main(String[] args) {
+       // 创建一个包含 5 个不同水果名称的 ArrayList，并打印输出
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Apple");
+        list.add("Banana");
+        list.add("Orange");
+        list.add("Grape");
+        list.add("Cherry");
+        System.out.println(list);
+        //元素查找,在水果列表中找到 "苹果" 的索引位置。
+        System.out.println(list.indexOf("Apple"));
+//        在水果列表的第 2 个位置插入 "芒果"。
+//        在水果列表的 橘子 前边插入 “芒果” ,橘子 后边插入芒果
+        list.add(1,"Mango");
+        int orange_index= list.indexOf("Orange");
+        list.add(orange_index,"Mango");
+        list.add(orange_index+2,"Mango");
+        System.out.println(list);
+        //创建一个包含 3 种新水果的集合，将其全部添加到原列表末尾
+        ArrayList<String>  new_list = new ArrayList<>();
+        new_list.add("Watermellon");
+        new_list.add("pears");
+        new_list.add("Juice");
+        list.addAll(new_list);
+
+        System.out.println(list);
+        //删除列表中所有 "香蕉"
+        list.removeIf(fruit -> "Banana".equals(fruit));
+        System.out.println("----------");
+        System.out.println(list);
+        for (String fruit1:list){
+            System.out.println(fruit1.toUpperCase());
+        }
+        List<String> list3 = list.subList(1,4);
+        System.out.println(list3.reversed());
+        //将 ArrayList 转换为数组，并打印数组内容
+        String[] array = list.toArray(new String[0]);
+        for (String fruit : array) {
+            System.out.println(fruit);
+        }
+        System.out.println(list.contains("Cherry") & list.contains("Orange"));
+        //创建原列表的深拷贝，修改拷贝后确保原列表不受影响
+        List<String> copy = new ArrayList<>(list);
+        System.out.println("深拷贝后的："+copy);
+        //按字母顺序升序排列水果列表
+        Collections.sort(list);
+
+//        去重操作
+//        在包含重复元素的数字列表中，移除所有重复值 numbers = numbers.stream().distinct().collect(Collectors.toList());
+        list=new ArrayList<>(list.stream().distinct().collect(Collectors.toList()));
+        System.out.println("去重后的："+list);
+        System.out.println("----------------");
+//                批量删除
+//        删除列表中所有以 "B" 开头的水果
+        list.removeIf(fruit -> fruit.startsWith("B"));
+        System.out.println("删除列表中以B开头的水果："+list);
+//                容量优化
+//        将列表容量调整为当前元素数量，节省内存空间
+        list.trimToSize();
+//                过滤操作
+//        使用 Java 8 Stream API 找出所有长度超过 5 个字母的水果
+            list=new ArrayList(list.stream().filter(fruit -> fruit.length() > 5).collect(Collectors.toList()));
+        System.out.println("找出所有长度超过5个字母的水果："+list);
+
+
+    }
+}
