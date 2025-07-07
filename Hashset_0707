@@ -1,0 +1,146 @@
+package Teach_test;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Objects;
+
+public class Hashmap_test {
+    public static void main(String[] args) {
+//        创建一个包含 5 个国家名称的 HashSet，并打印输出
+        HashSet<String> set = new HashSet<>();
+        set.add("China");
+        set.add("USA");
+        set.add("Dubai");
+        set.add("Bankok");
+        set.add("Koera");
+        System.out.println(set);
+//                元素存在性检查
+//        检查集合中是否包含 "Japan" 元素
+        System.out.println(set.contains("Japan"));
+//                插入元素
+//        向集合中添加新国家 "Brazil"，验证是否添加成功
+        set.add("Brazil");
+        System.out.println(set);
+//                批量添加
+//        创建一个包含 3 个国家的集合，批量添加到原集合中
+        HashSet<String> countries = new HashSet<>(Arrays.asList("Japan", "India", "QATAR"));
+        System.out.println( countries);
+
+        set.addAll(countries);
+
+//                删除元素
+//        尝试删除 "Germany" 元素，无论是否存在都返回操作结果
+        System.out.println(set.remove("Germany"));;
+
+//                集合遍历
+//        使用迭代器遍历集合并打印所有元素
+        Iterator<String> iterator = set.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+
+//                集合大小
+//        获取集合并返回元素数量，打印 "小型/中型/大型集合"
+    int size = set.size();
+        if(size<=10){
+            System.out.println("小型集合");
+        }else if(size>10&&size<=100){
+            System.out.println("中型集合");
+        }else {
+            System.out.println("大型集合");
+        }
+
+//        空集合检查
+//                清空集合并验证是否为空
+        HashSet<String> set2 =new HashSet<>();
+        set2.add("空集合检查");
+        System.out.println(set2);
+        set2.clear();
+        System.out.println("是否为空："+set2.isEmpty());
+
+//        数组转换
+//        将 HashSet 转换为数组，并打印数组内容
+       String [] arr= set.toArray(new String[0]);
+       for (int i=0;i< arr.length;i++){
+           System.out.print(arr[i]);
+        }
+//                集合比较
+//        创建两个不同内容的集合，检查它们是否相等
+       HashSet<String> set4= new HashSet<>(Arrays.asList("Usa","墨西哥","Canda"));
+       HashSet<String> set5= new HashSet<>(Arrays.asList("China", "USA", "France"));
+        System.out.println(set4.equals(set5));
+
+//        集合运算 - 并集
+//        求两个国家集合的并集
+        HashSet<String> Bingji = new HashSet<>(set4);
+        Bingji.addAll(set5);
+        System.out.println("---------并集：---");
+        System.out.println(Bingji);
+//        集合运算 - 交集
+//        求两个国家集合的交集
+        HashSet<String>  Jiaoji= new HashSet<>(set4);
+        Jiaoji.retainAll(set5);
+        System.out.println("----交集：----");
+        System.out.print(Jiaoji);
+//        集合运算 - 差集
+//        求集合A有而集合B没有的国家
+        HashSet<String>  Chaji= new HashSet<>(set4);
+        Chaji.removeAll(set5);
+//                元素过滤
+//        使用 Java 8 Stream API 找出所有以 "C" 开头的国家
+        set4.stream().filter(s -> s.startsWith("C")).forEach(System.out::println);
+//                对象去重
+//        创建自定义对象(Student)的 HashSet，验证重写 hashCode/equals 后的去重效果
+            HashSet<Student> students = new HashSet<>();
+            students.add(new Student("yzy", 18));
+            students.add(new Student("dcg", 60));
+            students.add(new Student("dcg", 60));
+            students.add(new Student("yzy", 24));
+            System.out.println("学生集合（去重后）：" + students);
+
+                        }
+}
+class Student{
+    private String name;
+    private int age;
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Student student)) return false;
+        return age == student.age && Objects.equals(name, student.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+}
